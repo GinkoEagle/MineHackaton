@@ -1,4 +1,3 @@
-// Plot a time series of a band's value in regions of the American West.
 var mine1 = ee.Feature(    // Tulison. -33.85010224656475,116.05011436512962
                            //          -33.85010224656475,116.08328792622581
                            //          -33.88331328750793,116.08328792622581
@@ -16,9 +15,6 @@ var mine2 = ee.Feature(    //SQM SALAR -23.444862421654562,-68.44521601288295
 
 var mines = new ee.FeatureCollection([mine2]);
 
-// Get brightness temperature data for 1 year.
-
-//var landsat8Toa = ee.ImageCollection('LANDSAT/LC08/C01/T1_TOA');
 var landsat8Toa = ee.ImageCollection('LANDSAT/LT05/C01/T1_TOA');
 
 var imgs = landsat8Toa.filterBounds(mines)
@@ -27,12 +23,12 @@ var imgs = landsat8Toa.filterBounds(mines)
     .map(function(image) {
     return image.multiply(512).uint8();
   });
-  
+
 
 Export.video.toDrive({
   collection: imgs,
   description: 'ChileMine',
-  dimensions: 720,
-  framesPerSecond: 12,
+  dimensions: 1440,
+  framesPerSecond: 1,
   region: mine2
 });
